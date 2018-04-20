@@ -11,12 +11,18 @@ public class MainActivity extends AppCompatActivity {
     private HilbertView hilbertView;
     private Button decButton, incButton;
     private final static int MAX_ORDER = 9;
+    private final static String LAST_ORDER = "MainActivity.order";
     private int order = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        if (savedInstanceState != null) {
+            order = savedInstanceState.getInt(LAST_ORDER);
+        }
+
         orderView = findViewById(R.id.order_view);
         hilbertView = findViewById(R.id.hilbert_view);
         decButton = findViewById(R.id.dec_button);
@@ -47,6 +53,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         display();
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt(LAST_ORDER, order);
     }
 
     private void display() {
